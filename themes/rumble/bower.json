@@ -1,0 +1,21 @@
+{
+  "name": "rumble",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Heath Dunlop <heath.dunlop@samdog.nz>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7"
+  }
+}
