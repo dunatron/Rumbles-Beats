@@ -9,9 +9,12 @@ Change it, enhance it and most importantly enjoy it!
 <!--[if !IE]><!-->
 <html lang="$ContentLocale">
 <!--<![endif]-->
-<!--[if IE 6 ]><html lang="$ContentLocale" class="ie ie6"><![endif]-->
-<!--[if IE 7 ]><html lang="$ContentLocale" class="ie ie7"><![endif]-->
-<!--[if IE 8 ]><html lang="$ContentLocale" class="ie ie8"><![endif]-->
+<!--[if IE 6 ]>
+<html lang="$ContentLocale" class="ie ie6"><![endif]-->
+<!--[if IE 7 ]>
+<html lang="$ContentLocale" class="ie ie7"><![endif]-->
+<!--[if IE 8 ]>
+<html lang="$ContentLocale" class="ie ie8"><![endif]-->
 <head>
     <% base_tag %>
     <title><% if $MetaTitle %>$MetaTitle<% else %>$Title<% end_if %> &raquo; $SiteConfig.Title</title>
@@ -22,15 +25,16 @@ Change it, enhance it and most importantly enjoy it!
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="shortcut icon" href="$ThemeDir/images/favicon.ico" />
+    <link rel="shortcut icon" href="$ThemeDir/images/favicon.ico"/>
     <%-- Theme CSS --%>
     <link rel="stylesheet" href="$ThemeDir/public/css/app.css">
-    <!-- Font Awesome Icons -->
 
 </head>
 <body class="$ClassName">
+<div id="rumbles-app">
     $Form
     $Layout
+</div>
 </body>
 <!-- jQuery -->
 <script src="$ThemeDir/js/jquery-2.2.4.min.js"></script>
@@ -38,7 +42,8 @@ Change it, enhance it and most importantly enjoy it!
 <!-- Bootstrap Core JavaScript -->
 <script src="$ThemeDir/js/bootstrap-3.3.7.min.js"></script>
 
-
+<%-- Vue.js --%>
+<script src="$ThemeDir/js/vue-2.1.8.js"></script>
 <script src="$ThemeDir/js/custom-vue.js"></script>
 
 </html>

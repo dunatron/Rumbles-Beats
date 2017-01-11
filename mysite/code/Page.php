@@ -26,7 +26,36 @@ class Page_Controller extends ContentController {
 	 * @var array
 	 */
 	private static $allowed_actions = array (
+	    'AddTrackForm'
 	);
+
+    public function AddTrackForm()
+    {
+        $trackTitle = TextField::create('Title', 'Add a track title')
+            ->setAttribute('v-model', 'newTrackTitle');
+        $trackDescription = TextareaField::create('Description', 'Add track description ')
+            ->setAttribute('v-model', 'newTrackDescription')
+            ->setAttribute('t-ron', 'this shows')
+            ->setAttribute('t-model', 'this shows too');
+
+        $trackFile = UploadField::create('TrackFile', 'Add the file G');
+
+        $fields = new FieldList(
+            $trackTitle,
+            $trackDescription,
+            $trackFile
+        );
+
+        $actions = new FieldList(
+            FormAction::create('processAddTrack', 'Submit')->setAttribute('v-on:click.prevent', 'addTrack')
+        );
+
+        $form = new Form($this, 'AddTrackForm', $fields, $actions);
+
+        return $form;
+
+    }
+
 
 	public function init() {
 		parent::init();
