@@ -26,7 +26,8 @@ class Page_Controller extends ContentController {
 	 * @var array
 	 */
 	private static $allowed_actions = array (
-	    'AddTrackForm'
+	    'AddTrackForm',
+        'processAddAlbum'
 	);
 
     public function AddTrackForm()
@@ -54,6 +55,59 @@ class Page_Controller extends ContentController {
 
         return $form;
 
+    }
+
+    /**
+     * Add New album Form
+     */
+    public function AddAlbumForm()
+    {
+        // Fields
+        $albumTitle = TextField::create('Title', 'Add Album Title')
+            ->setAttribute('v-model', 'newAlbumTitle');
+        $albumDescription = HtmlEditorField::create('Description', 'Add Album Description')
+            ->setAttribute('v-model', 'newAlbumDescription');
+
+        // Actions
+        $submitAction = FormAction::create('processAddAlbum', 'Submit');
+
+        $fields = FieldList::create(
+            $albumTitle,
+            $albumDescription
+        );
+
+        $actions = FieldList::create(
+            $submitAction
+        );
+
+        $form = Form::create($this, 'AddAlbumForm', $fields, $actions);
+        $form->setAttribute('@submit.prevent', 'onAlbumSubmit');
+
+        return $form;
+    }
+
+    /**
+     * Process Add Album Form
+     */
+    public function processAddAlbum(SS_HTTPRequest $request)
+    {
+        //$POST = $this->getRequest()->param('body');
+        //$POST = json_decode($POST);
+        $newAlbum = Album::create();
+        //$newAlbum->update($data);
+        // 'body' => '{"albumTitle":"","albumDescription":"dfasdfasdfasdf"}',
+        //$newAlbum->albumTitle = $POST['albumTitle'];
+        //$newAlbum->albumDescription = $POST['albumDescription'];
+//        $test = $request->getBody();
+        $test = $request->getBody();
+        $yo = json_decode($test);
+        $heyo = $yo->albumTitle;
+//        $newAlbum->albumDescription = var_export($heyo, true);
+        $newAlbum->albumDescription = $heyo;
+
+//        $newAlbum->albumDescription = var_export($request, true);
+        $newAlbum->write();
+        return $this->redirectBack();
     }
 
 

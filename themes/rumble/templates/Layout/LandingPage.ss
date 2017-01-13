@@ -7,20 +7,23 @@
             <div class="col-sm-6">
                 <div class="add-new-track">
                     $AddTrackForm
+                    <div class="well">
+                        {{ newTrackTitle }}
+                        {{ newTrackDescription }}
+                    </div>
                 </div>
-                {{ newTrackTitle }}
-                {{ newTrackDescription }}
 
-                $getAllAlbums
-
+                <div class="add-new-album">
+                    $AddAlbumForm
+                </div>
             </div>
 
             <div class="col-sm-6">
 
                 <ul>
-                    <li v-for="track in tracks">
-                        <h1>{{ track.Title }}</h1>
-                        <p>{{ track.Description }}</p>
+                    <li v-for="album in albums">
+                        <h1>{{ album.albumTitle }}</h1>
+                        <pre>{{ album.albumDescription }}</pre>
                     </li>
                 </ul>
 

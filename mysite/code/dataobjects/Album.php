@@ -8,8 +8,8 @@
 class Album extends DataObject
 {
     private static $db = array(
-        'Title' => 'Text',
-        'Description' => 'HTMLText',
+        'albumTitle' => 'Text',
+        'albumDescription' => 'HTMLText',
     );
 
     private static $has_many = array(
