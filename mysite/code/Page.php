@@ -41,10 +41,17 @@ class Page_Controller extends ContentController {
 
         $trackFile = UploadField::create('TrackFile', 'Add the file G');
 
+        $chooseAlbum = DropdownField::create('AlbumID', 'Choose album',
+            Album::get()->map('ID', 'albumTitle')->toArray(),
+            null,
+            true
+        );
+
         $fields = new FieldList(
             $trackTitle,
             $trackDescription,
-            $trackFile
+            $trackFile,
+            $chooseAlbum
         );
 
         $actions = new FieldList(
@@ -101,8 +108,9 @@ class Page_Controller extends ContentController {
 //        $test = $request->getBody();
         $test = $request->getBody();
         $yo = json_decode($test);
-        $heyo = $yo->albumTitle;
+        $heyo = $yo->albumDescription;
 //        $newAlbum->albumDescription = var_export($heyo, true);
+        $newAlbum->albumTitle = $yo->albumTitle;
         $newAlbum->albumDescription = $heyo;
 
 //        $newAlbum->albumDescription = var_export($request, true);
