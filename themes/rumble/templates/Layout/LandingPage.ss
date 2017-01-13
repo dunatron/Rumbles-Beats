@@ -11,12 +11,17 @@
                 {{ newTrackTitle }}
                 {{ newTrackDescription }}
 
+                $getAllAlbums
+
             </div>
 
             <div class="col-sm-6">
 
                 <ul>
-                    <li v-for="track in tracks">{{ track }}</li>
+                    <li v-for="track in tracks">
+                        <h1>{{ track.Title }}</h1>
+                        <p>{{ track.Description }}</p>
+                    </li>
                 </ul>
 
             </div>

@@ -42,6 +42,9 @@ Change it, enhance it and most importantly enjoy it!
 <!-- Bootstrap Core JavaScript -->
 <script src="$ThemeDir/js/bootstrap-3.3.7.min.js"></script>
 
+<%-- Axios | https://github.com/mzabriskie/axios --%>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <%-- Vue.js --%>
 <script src="$ThemeDir/js/vue-2.1.8.js"></script>
 <script src="$ThemeDir/js/custom-vue.js"></script>

@@ -48,6 +48,8 @@ class LandingPage extends Page
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+
+
         
         return $fields;
     }
@@ -65,7 +67,18 @@ class LandingPage_Controller extends Page_Controller
      * );
      * @var array
      */
-    private static $allowed_actions = array();
+    private static $allowed_actions = array(
+        'getAllAlbums'
+    );
+
+    public function getAllAlbums()
+    {
+        $f = new JSONDataFormatter();
+        $albums = Album::get();
+
+        $convert = $f->convertDataObjectSet($albums);
+        return $convert;
+    }
 
     public function init()
     {
