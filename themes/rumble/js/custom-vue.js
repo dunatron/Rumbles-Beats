@@ -13,8 +13,13 @@ class AlbumForm {
     }
 
     data() {
-        let data = Object.assign({}, this);
-        delete data.originalData;
+        let data = {};
+
+        for (let property in this.originalData){
+            data[property] = this[property];
+        }
+        // let data = Object.assign({}, this);
+        // delete data.originalData;
         return data;
     }
 
@@ -26,13 +31,24 @@ class AlbumForm {
     }
 
     submit(requestType, url) {
-        axios[requestType](url, this.data())
-            .then(this.onSuccess.bind(this))
-            .catch(this.onFail)
+        return new Promise((resolve, reject) => {
+            axios[requestType](url, this.data())
+                .then(response => {
+                    this.onSuccess(response.data);
+
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    this.onFail(error.response.data);
+
+                    reject(error.response.data);
+                })
+        });
     }
 
-    onSuccess(response) {
+    onSuccess(data) {
         alert('Album ' + this.newAlbumTitle + ' has been created');
+        // alert(data.message);
         this.reset();
     }
 
