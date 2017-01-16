@@ -1,6 +1,21 @@
 /**
  * Created by admin on 11/01/17.
  */
+class AlbumForm {
+    constructor(data){
+
+        this.data = data;
+
+        for(let field in data){
+            this[field] = data[field];
+        }
+
+    }
+    // reset form fields
+    reset() {
+
+    }
+}
 
 new Vue({
 
@@ -10,24 +25,41 @@ new Vue({
         newTrackDescription: '',
         tracks: [],
         albums: [],
-        newAlbumTitle: '',
-        newAlbumDescription: ''
+        // newAlbumTitle: '',
+        // newAlbumDescription: ''
+        albumForm: new AlbumForm({
+            newAlbumTitle: '',
+            newAlbumDescription: ''
+        })
     },
 
     methods: {
-        addTrack: function() {
+        addTrack: function () {
             //alert('adding track');
             // this.tracks.push(this.newTrackTitle);
             this.tracks.push(this.newTrackTitle);
         },
 
         onAlbumSubmit() {
-            //alert('trying to submit album form');
+
             axios.post('/albums/processAddAlbum', {
-                albumTitle: this.newAlbumTitle,
-                albumDescription: this.newAlbumDescription
-            });
-            //axios.post('/albums/processAddAlbum', this.$data)
+                albumTitle: this.albumForm.newAlbumTitle,
+                albumDescription: this.albumForm.newAlbumDescription
+            })
+                // .then(response => alert('success'))
+                .then(this.onAlbumSubmitSuccess)
+                .catch(error => {
+                    // alert(error.response);
+                    alert('Error trying to create new Album');
+                })
+
+        },
+
+        onAlbumSubmitSuccess(response){
+            //alert('Album has been added');
+            alert('Album ' + this.newAlbumTitle + ' has been created');
+            this.newAlbumTitle = '';
+            this.newAlbumDescription = '';
         }
     },
 

@@ -71,9 +71,9 @@ class Page_Controller extends ContentController {
     {
         // Fields
         $albumTitle = TextField::create('Title', 'Add Album Title')
-            ->setAttribute('v-model', 'newAlbumTitle');
+            ->setAttribute('v-model', 'albumForm.newAlbumTitle');
         $albumDescription = HtmlEditorField::create('Description', 'Add Album Description')
-            ->setAttribute('v-model', 'newAlbumDescription');
+            ->setAttribute('v-model', 'albumForm.newAlbumDescription');
 
         // Actions
         $submitAction = FormAction::create('processAddAlbum', 'Submit');
@@ -98,22 +98,18 @@ class Page_Controller extends ContentController {
      */
     public function processAddAlbum(SS_HTTPRequest $request)
     {
-        //$POST = $this->getRequest()->param('body');
-        //$POST = json_decode($POST);
-        $newAlbum = Album::create();
-        //$newAlbum->update($data);
-        // 'body' => '{"albumTitle":"","albumDescription":"dfasdfasdfasdf"}',
-        //$newAlbum->albumTitle = $POST['albumTitle'];
-        //$newAlbum->albumDescription = $POST['albumDescription'];
-//        $test = $request->getBody();
-        $test = $request->getBody();
-        $yo = json_decode($test);
-        $heyo = $yo->albumDescription;
-//        $newAlbum->albumDescription = var_export($heyo, true);
-        $newAlbum->albumTitle = $yo->albumTitle;
-        $newAlbum->albumDescription = $heyo;
 
-//        $newAlbum->albumDescription = var_export($request, true);
+        $newAlbum = Album::create();
+
+        $formData = $request->getBody();
+        $decodeForm = json_decode($formData);
+
+        $title = $decodeForm->albumTitle;
+        $description = $decodeForm->albumDescription;
+
+        $newAlbum->albumTitle = $title;
+        $newAlbum->albumDescription = $description;
+
         $newAlbum->write();
         return $this->redirectBack();
     }
