@@ -2,18 +2,42 @@
  * Created by admin on 11/01/17.
  */
 class AlbumForm {
-    constructor(data){
+    constructor(data) {
 
-        this.data = data;
+        this.originalData = data;
 
-        for(let field in data){
+        for (let field in data) {
             this[field] = data[field];
         }
 
     }
+
+    data() {
+        let data = Object.assign({}, this);
+        delete data.originalData;
+        return data;
+    }
+
     // reset form fields
     reset() {
+        for (let field in this.originalData) {
+            this[field] = '';
+        }
+    }
 
+    submit(requestType, url) {
+        axios[requestType](url, this.data())
+            .then(this.onSuccess.bind(this))
+            .catch(this.onFail)
+    }
+
+    onSuccess(response) {
+        alert('Album ' + this.newAlbumTitle + ' has been created');
+        this.reset();
+    }
+
+    onFail(error) {
+        alert('Error trying to create new Album');
     }
 }
 
@@ -25,8 +49,6 @@ new Vue({
         newTrackDescription: '',
         tracks: [],
         albums: [],
-        // newAlbumTitle: '',
-        // newAlbumDescription: ''
         albumForm: new AlbumForm({
             newAlbumTitle: '',
             newAlbumDescription: ''
@@ -35,42 +57,15 @@ new Vue({
 
     methods: {
         addTrack: function () {
-            //alert('adding track');
-            // this.tracks.push(this.newTrackTitle);
             this.tracks.push(this.newTrackTitle);
         },
 
         onAlbumSubmit() {
-
-            axios.post('/albums/processAddAlbum', {
-                albumTitle: this.albumForm.newAlbumTitle,
-                albumDescription: this.albumForm.newAlbumDescription
-            })
-                // .then(response => alert('success'))
-                .then(this.onAlbumSubmitSuccess)
-                .catch(error => {
-                    // alert(error.response);
-                    alert('Error trying to create new Album');
-                })
-
-        },
-
-        onAlbumSubmitSuccess(response){
-            //alert('Album has been added');
-            alert('Album ' + this.newAlbumTitle + ' has been created');
-            this.newAlbumTitle = '';
-            this.newAlbumDescription = '';
+            this.albumForm.submit('post', '/albums/processAddAlbum');
         }
     },
 
     mounted() {
-
-        // Make an ajax request to our server /getAllAlbums
-
-        // $.ajax() or $.getJson() if we have JQuery library
-        // axios.get('/albums/getAllAlbums').then(response => console.log(response));
-        // axios.get('/albums/getAllAlbums').then(response => this.tracks = response.data);
         axios.get('/albums/getAllAlbums').then(response => this.albums = response.data.items);
-
     }
 });
