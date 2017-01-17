@@ -15,7 +15,7 @@ class AlbumForm {
     data() {
         let data = {};
 
-        for (let property in this.originalData){
+        for (let property in this.originalData) {
             data[property] = this[property];
         }
         // let data = Object.assign({}, this);
@@ -47,7 +47,7 @@ class AlbumForm {
     }
 
     onSuccess(data) {
-        alert('Album ' + this.newAlbumTitle + ' has been created');
+        alert('Album ' + this.albumTitle + ' has been created');
         // alert(data.message);
         this.reset();
     }
@@ -66,8 +66,8 @@ new Vue({
         tracks: [],
         albums: [],
         albumForm: new AlbumForm({
-            newAlbumTitle: '',
-            newAlbumDescription: ''
+            albumTitle: '',
+            albumDescription: ''
         })
     },
 
@@ -77,11 +77,22 @@ new Vue({
         },
 
         onAlbumSubmit() {
-            this.albumForm.submit('post', '/albums/processAddAlbum');
+            this.albums.push(this.albumForm.data());
+            this.albumForm.submit('post', 'http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/processAddAlbum');
         }
     },
 
     mounted() {
-        axios.get('/albums/getAllAlbums').then(response => this.albums = response.data.items);
+        axios.get('http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/getAllAlbums').then(response => this.albums = response.data.items);
     }
+});
+
+
+// Vue components
+Vue.component('item-title', {
+    template: '<h1><slot></slot></h1>'
+});
+
+Vue.component('item-description', {
+    template: '<p><slot></slot></p>'
 });

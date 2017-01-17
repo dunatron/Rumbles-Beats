@@ -73,9 +73,9 @@ class Page_Controller extends ContentController
     {
         // Fields
         $albumTitle = TextField::create('Title', 'Add Album Title')
-            ->setAttribute('v-model', 'albumForm.newAlbumTitle');
+            ->setAttribute('v-model', 'albumForm.albumTitle');
         $albumDescription = HtmlEditorField::create('Description', 'Add Album Description')
-            ->setAttribute('v-model', 'albumForm.newAlbumDescription');
+            ->setAttribute('v-model', 'albumForm.albumDescription');
 
         // Actions
         $submitAction = FormAction::create('processAddAlbum', 'Submit');
@@ -105,8 +105,8 @@ class Page_Controller extends ContentController
         $vars = $request->getBody();
         $decode = json_decode($vars);
 
-        $newAlbum->albumTitle = $decode->newAlbumTitle;
-        $newAlbum->albumDescription = $decode->newAlbumDescription;
+        $newAlbum->albumTitle = $decode->albumTitle;
+        $newAlbum->albumDescription = $decode->albumDescription;
 
         $newAlbum->write();
         return $this->redirectBack();
