@@ -5,18 +5,36 @@
                 <h1>Rumbles Beats</h1>
             </div>
             <div class="col-sm-6">
-                <div class="add-new-track">
-                    $AddTrackForm
-                    <div class="well">
-                        {{ newTrackTitle }}
-                        {{ newTrackDescription }}
 
+
+
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#addAlbumAddcordion" aria-expanded="false" aria-controls="addAlbumAddcordion">
+                         new album
+                    </a>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#addTrackAddcordion" aria-expanded="false" aria-controls="addTrackAddcordion">
+                        new track
+                    </a>
+                </p>
+                <div class="collapse" id="addAlbumAddcordion">
+                    <div class="card card-block">
+                        <div class="add-new-album">
+                            $AddAlbumForm
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse" id="addTrackAddcordion">
+                    <div class="add-new-track">
+                        $AddTrackForm
+                        <div class="well">
+                            {{ newTrackTitle }}
+                            {{ newTrackDescription }}
+
+                        </div>
                     </div>
                 </div>
 
-                <div class="add-new-album">
-                    $AddAlbumForm
-                </div>
+
             </div>
 
             <div class="col-sm-6">
