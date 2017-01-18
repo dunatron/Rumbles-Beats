@@ -8,8 +8,8 @@
 class Track extends DataObject
 {
     private static $db = array(
-        'Title' => 'Text',
-        'Description' => 'HTMLText',
+        'trackTitle' => 'Text',
+        'trackDescription' => 'HTMLText',
     );
 
     private static $has_one = array(
@@ -18,8 +18,8 @@ class Track extends DataObject
     );
 
     private static $summary_fields = array(
-        'Title' => 'Title',
-        'Description' => 'Description'
+        'trackTitle' => 'trackTitle',
+        'trackDescription' => 'trackDescription'
     );
 
     public function getCMSFields()
@@ -27,5 +27,21 @@ class Track extends DataObject
         $fields = parent::getCMSFields();
 
         return $fields;
+    }
+
+    public function canView($member = null) {
+        return true;
+    }
+
+    public function canEdit($member = null) {
+        return Permission::check('CMS_ACCESS_CMSMain', 'any', $member);
+    }
+
+    public function canDelete($member = null) {
+        return Permission::check('CMS_ACCESS_CMSMain', 'any', $member);
+    }
+
+    public function canCreate($member = null) {
+        return Permission::check('CMS_ACCESS_CMSMain', 'any', $member);
     }
 }

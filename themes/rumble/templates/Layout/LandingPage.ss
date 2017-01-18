@@ -1,13 +1,11 @@
+
 <section>
     <div class="container" id="intro-section">
         <div class="row">
             <div class="col-sm-12">
-                <h1>Rumbles Beats</h1>
+                <h1>$Title</h1>
             </div>
             <div class="col-sm-6">
-
-
-
                 <p>
                     <a class="btn btn-primary" data-toggle="collapse" href="#addAlbumAddcordion" aria-expanded="false" aria-controls="addAlbumAddcordion">
                          new album
@@ -26,15 +24,19 @@
                 <div class="collapse" id="addTrackAddcordion">
                     <div class="add-new-track">
                         $AddTrackForm
-                        <div class="well">
-                            {{ newTrackTitle }}
-                            {{ newTrackDescription }}
-
+                        <div class="well" v-if="trackForm.trackTitle || trackForm.trackDescription  || trackForm.assocAlbum">
+                            <h1 v-show="trackForm.trackTitle">
+                                Title: {{ trackForm.trackTitle }}
+                            </h1>
+                            <p v-show="trackForm.trackDescription">
+                                Description: {{ trackForm.trackDescription }}
+                            </p>
+                            <h2 v-show="trackForm.assocAlbum">
+                                Album ID: {{ trackForm.assocAlbum }}
+                            </h2>
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="col-sm-6">

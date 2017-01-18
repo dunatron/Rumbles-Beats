@@ -29,25 +29,25 @@ class Page_Controller extends ContentController
      */
     private static $allowed_actions = array(
         'AddTrackForm',
-        'processAddAlbum'
+        'processAddAlbum',
+        'processAddTrack'
     );
 
     public function AddTrackForm()
     {
         $trackTitle = TextField::create('Title', 'Add a track title')
-            ->setAttribute('v-model', 'newTrackTitle');
+            ->setAttribute('v-model', 'trackForm.trackTitle');
         $trackDescription = TextareaField::create('Description', 'Add track description ')
-            ->setAttribute('v-model', 'newTrackDescription')
-            ->setAttribute('t-ron', 'this shows')
-            ->setAttribute('t-model', 'this shows too');
+            ->setAttribute('v-model', 'trackForm.trackDescription');
 
-        $trackFile = UploadField::create('TrackFile', 'Add the file G');
+        $trackFile = UploadField::create('TrackFile', 'Add the file G')
+            ->setAttribute('v-model', 'trackForm.trackFile');
 
         $chooseAlbum = DropdownField::create('AlbumID', 'Choose album',
             Album::get()->map('ID', 'albumTitle')->toArray(),
             null,
             true
-        );
+        )->setAttribute('v-model', 'trackForm.assocAlbum');
 
         $fields = new FieldList(
             $trackTitle,
@@ -57,7 +57,7 @@ class Page_Controller extends ContentController
         );
 
         $actions = new FieldList(
-            FormAction::create('processAddTrack', 'Submit')->setAttribute('v-on:click.prevent', 'addTrack')
+            FormAction::create('processAddTrack', 'Submit')->setAttribute('v-on:click.prevent', 'onTrackSubmit')
         );
 
         $form = new Form($this, 'AddTrackForm', $fields, $actions);
@@ -109,6 +109,25 @@ class Page_Controller extends ContentController
         $newAlbum->albumDescription = $decode->albumDescription;
 
         $newAlbum->write();
+        return $this->redirectBack();
+    }
+
+    /**
+     * Process Add Track Form
+     */
+    public function processAddTrack(SS_HTTPRequest $request)
+    {
+        $newTrack = Track::create();
+
+        $vars = $request->getBody();
+        $decode = json_decode($vars);
+
+        $newTrack->trackTitle = $decode->trackTitle;
+        $newTrack->trackDescription = $decode->trackDescription;
+        $newTrack->AlbumID = $decode->assocAlbum;
+
+
+        $newTrack->write();
         return $this->redirectBack();
     }
 

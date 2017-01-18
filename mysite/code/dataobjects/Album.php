@@ -25,6 +25,8 @@ class Album extends DataObject
     {
         $fields = parent::getCMSFields();
 
+        $test = TextField::create('test', 'testig')->set;
+
         $fields->addFieldToTab('Root.Tracks', GridField::create(
             'Tracks',
             'Code under this holder',

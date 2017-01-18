@@ -57,6 +57,62 @@ class AlbumForm {
     }
 }
 
+class TrackForm {
+    constructor(data) {
+
+        this.originalData = data;
+
+        for (let field in data) {
+            this[field] = data[field];
+        }
+
+    }
+
+    data() {
+        let data = {};
+
+        for (let property in this.originalData) {
+            data[property] = this[property];
+        }
+        // let data = Object.assign({}, this);
+        // delete data.originalData;
+        return data;
+    }
+
+    // reset form fields
+    reset() {
+        for (let field in this.originalData) {
+            this[field] = '';
+        }
+    }
+
+    submit(requestType, url) {
+        return new Promise((resolve, reject) => {
+            axios[requestType](url, this.data())
+                .then(response => {
+                    this.onSuccess(response.data);
+
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    this.onFail(error.response.data);
+
+                    reject(error.response.data);
+                })
+        });
+    }
+
+    onSuccess(data) {
+        alert('Track ' + this.trackTitle + ' has been created');
+        // alert(data.message);
+        this.reset();
+    }
+
+    onFail(error) {
+        alert('Error trying to create new Track');
+    }
+}
+
 new Vue({
 
     el: '#rumbles-app',
@@ -68,6 +124,11 @@ new Vue({
         albumForm: new AlbumForm({
             albumTitle: '',
             albumDescription: ''
+        }),
+        trackForm: new TrackForm({
+            trackTitle: '',
+            trackDescription: '',
+            assocAlbum: ''
         })
     },
 
@@ -78,12 +139,16 @@ new Vue({
 
         onAlbumSubmit() {
             this.albums.push(this.albumForm.data());
-            this.albumForm.submit('post', 'http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/processAddAlbum');
+            this.albumForm.submit('post', '/albums/processAddAlbum');
+        },
+
+        onTrackSubmit() {
+            this.trackForm.submit('post', '/albums/processAddTrack');
         }
     },
 
     mounted() {
-        axios.get('http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/getAllAlbums').then(response => this.albums = response.data.items);
+        axios.get('/albums/getAllAlbums').then(response => this.albums = response.data.items);
     }
 });
 
