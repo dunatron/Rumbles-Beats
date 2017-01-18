@@ -80,6 +80,11 @@ class LandingPage_Controller extends Page_Controller
         return $convert;
     }
 
+    public function albumLink()
+    {
+        return '/album/';
+    }
+
     public function init()
     {
         parent::init();

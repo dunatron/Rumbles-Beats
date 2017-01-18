@@ -50,6 +50,8 @@
                     </div>
 
                     <li v-for="album in albums">
+                        <a v-bind:href="album.ID">{{ album.ID }}</a>
+
                         <h1>{{ album.albumTitle }}</h1>
                         <pre>{{ album.albumDescription }}</pre>
                     </li>
