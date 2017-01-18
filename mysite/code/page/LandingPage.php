@@ -68,7 +68,8 @@ class LandingPage_Controller extends Page_Controller
      * @var array
      */
     private static $allowed_actions = array(
-        'getAllAlbums'
+        'getAllAlbums',
+        'show'
     );
 
     public function getAllAlbums()
@@ -83,6 +84,20 @@ class LandingPage_Controller extends Page_Controller
     public function albumLink()
     {
         return '/album/';
+    }
+
+    public function show(SS_HTTPRequest $request) {
+        $album = Album::get()->byID($request->param('ID'));
+        $tracks = Track::get()->filter('AlbumID', $album->ID);
+
+//        if(!$region) {
+//            return $this->httpError(404,'That region could not be found');
+//        }
+
+        return array (
+            'Region' => $album,
+            'Tracks' => $tracks
+        );
     }
 
     public function init()

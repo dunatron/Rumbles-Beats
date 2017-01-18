@@ -139,16 +139,16 @@ new Vue({
 
         onAlbumSubmit() {
             this.albums.push(this.albumForm.data());
-            this.albumForm.submit('post', '/albums/processAddAlbum');
+            this.albumForm.submit('post', 'http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/processAddAlbum');
         },
 
         onTrackSubmit() {
-            this.trackForm.submit('post', '/albums/processAddTrack');
+            this.trackForm.submit('post', 'http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/processAddTrack');
         }
     },
 
     mounted() {
-        axios.get('/albums/getAllAlbums').then(response => this.albums = response.data.items);
+        axios.get('http://localhost:8888/TRONSTUDIOS/rumbles-beats/albums/getAllAlbums').then(response => this.albums = response.data.items);
     }
 });
 

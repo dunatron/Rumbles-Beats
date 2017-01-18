@@ -21,6 +21,10 @@ class Album extends DataObject
         'Description' => 'Description'
     );
 
+    public function Link() {
+        return $this->RegionsPage()->Link('show/'.$this->ID);
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
