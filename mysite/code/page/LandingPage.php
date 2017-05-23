@@ -89,13 +89,9 @@ class LandingPage_Controller extends Page_Controller
     public function show(SS_HTTPRequest $request) {
         $album = Album::get()->byID($request->param('ID'));
         $tracks = Track::get()->filter('AlbumID', $album->ID);
-
-//        if(!$region) {
-//            return $this->httpError(404,'That region could not be found');
-//        }
-
+	    
         return array (
-            'Region' => $album,
+            'Album' => $album,
             'Tracks' => $tracks
         );
     }
